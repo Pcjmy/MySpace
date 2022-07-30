@@ -15,11 +15,14 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+### 运行依赖
+
++ bootstrap
++ jquery
++ vue-router
++ vuex
 
 ```javascript
 npm i jquery
+npm i jwt-decode
 ```
