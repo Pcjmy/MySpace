@@ -1,17 +1,33 @@
-# myspace
+## MySpace
 
-## Project setup
+### 环境配置
+
+[Vue官网](https://vuejs.org/)
+
+[Nodejs](https://nodejs.org/en/)
+
+16.16.0 LTS
+
+**图形化界面**
+
+```bash
+# 安装@vue/cli
+npm i -g @vue/cli
+# 启动图形化界面
+vue ui
 ```
+
+**插件**
+
+![插件](assets\插件.PNG)
+
+### 命令行
+
+```bash
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
+# 运行
 npm run serve
-```
-
-### Compiles and minifies for production
-```
+# 打包
 npm run build
 ```
 
@@ -19,6 +35,7 @@ npm run build
 
 + bootstrap
 + jquery
++ jwt-decode
 + vue-router
 + vuex
 
@@ -26,3 +43,8 @@ npm run build
 npm i jquery
 npm i jwt-decode
 ```
+
+### 功能
+
++ 网站整体布局
++ 用户动态页面
