@@ -4,7 +4,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-1 img-field">
-              <img class="img-fluid" :src="user.photo" alt="">
+              <img class="img-fluid" :src="user.photo" @error="setDefaultImage">
             </div>
             <div class="col-11">
               <div class="username">{{ user.username }}</div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import defaultImage from  '../assets/default.png'
 import ContentBase from '../components/ContentBase';
 import $ from 'jquery';
 import { reactive } from 'vue';
@@ -30,6 +31,7 @@ export default {
     const users = reactive({
       info: []
     })
+
     $.ajax({
       url: 'https://app165.acapp.acwing.com.cn/myspace/userlist/',
       type: "get",
@@ -38,8 +40,13 @@ export default {
       }
     })
 
+    const setDefaultImage = (e)=> {
+      e.target.src = defaultImage;
+    }
+
     return {
-      users
+      users,
+      setDefaultImage
     }
   }
 }
