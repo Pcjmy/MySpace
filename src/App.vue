@@ -1,7 +1,6 @@
 <template>
   <NavBar />
   <router-view />
-  <userList />
 </template>
 
 <script>
