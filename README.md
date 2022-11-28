@@ -19,7 +19,7 @@ vue ui
 
 **插件**
 
-![插件](https://github.com/Pcjmy/vue/blob/main/assets/%E6%8F%92%E4%BB%B6.PNG?raw=true)
+![插件](assets/插件.png)
 
 ### 命令行
 

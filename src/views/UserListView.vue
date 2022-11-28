@@ -1,6 +1,6 @@
 <template>
   <ContentBase>
-    <div class="card" v-for="user in users" :key="user.id" @click="open_user_profile(user.id)">
+    <div class="card" v-for="user in users.info" :key="user.id" @click="open_user_profile(user.id)">
         <div class="card-body">
           <div class="row">
             <div class="col-1 img-field">
@@ -19,7 +19,7 @@
 <script>
 import ContentBase from '../components/ContentBase';
 import $ from 'jquery';
-import { ref } from 'vue';
+import { reactive } from 'vue';
 
 export default {
   name: "UserList",
@@ -27,21 +27,22 @@ export default {
     ContentBase,
   },
   setup() {
-    let users=ref([]);
-
+    const users = reactive({
+      info: []
+    })
     $.ajax({
       url: 'https://app165.acapp.acwing.com.cn/myspace/userlist/',
       type: "get",
-      success(resp) {
-        users.value=resp;
+      success(res) {
+        users.info=res;
       }
     })
 
     return {
       users
-    };
+    }
   }
-};
+}
 </script>
 
 <style scoped>
