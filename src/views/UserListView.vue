@@ -21,13 +21,16 @@ import defaultImage from  '../assets/default.png'
 import ContentBase from '../components/ContentBase';
 import $ from 'jquery';
 import { reactive } from 'vue';
+import { useStore } from 'vuex'
+import router from '@/router';
 
 export default {
   name: "UserList",
   components: {
-    ContentBase,
+    ContentBase
   },
   setup() {
+    const store = useStore();
     const users = reactive({
       info: []
     })
@@ -40,13 +43,27 @@ export default {
       }
     })
 
-    const setDefaultImage = (e)=> {
+    const setDefaultImage = (e) => {
       e.target.src = defaultImage;
+    }
+
+    const open_user_profile = (userId) => {
+      if (store.state.user.is_login) {
+        router.push({
+          name: 'useprofile',
+          params: {
+            userId: userId
+          }
+        })
+      } else {
+        router.push({name: 'login'})
+      }
     }
 
     return {
       users,
-      setDefaultImage
+      setDefaultImage,
+      open_user_profile
     }
   }
 }

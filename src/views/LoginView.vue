@@ -33,9 +33,9 @@ export default {
   },
   setup() {
     const store = useStore();
-    let username = ref('');
-    let password = ref('');
-    let error_message = ref('');
+    let username = ref();
+    let password = ref();
+    let error_message = ref();
 
     const login = () => {
       error_message.value = "";

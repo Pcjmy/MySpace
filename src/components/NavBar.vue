@@ -11,7 +11,7 @@
           <router-link class="nav-link" :to="{name: 'home'}">首页</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{name: 'userlist'}">好友列表</router-link>
+          <router-link class="nav-link" :to="{name: 'userlist'}" @click="open_user_profile">好友列表</router-link>
         </li>
       </ul>
       <ul class="navbar-nav" v-if="!$store.state.user.is_login">
@@ -42,6 +42,7 @@
 
 <script>
 import { useStore } from 'vuex';
+import router from '@/router';
 
 export default {
     name: "NavBar",
@@ -49,11 +50,17 @@ export default {
       const store = useStore();
       const logout = () => {
         store.commit('logout');
-      };
-
-      return {
-        logout,
       }
+
+      const open_user_profile = () => {
+        if (store.state.user.is_login) {
+          router.push({name: 'userlist'})
+        } else {
+          router.push({name: 'login'})
+        }
+      }
+
+      return { logout, open_user_profile }
     }
 }
 </script>
