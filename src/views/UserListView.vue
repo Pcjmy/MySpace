@@ -36,10 +36,10 @@ export default {
     })
 
     $.ajax({
-      url: 'https://app165.acapp.acwing.com.cn/myspace/userlist/',
+      url: "https://app165.acapp.acwing.com.cn/myspace/userlist/",
       type: "get",
       success(res) {
-        users.info=res;
+        users.info = res;
       }
     })
 
@@ -50,7 +50,7 @@ export default {
     const open_user_profile = (userId) => {
       if (store.state.user.is_login) {
         router.push({
-          name: 'useprofile',
+          name: 'userprofile',
           params: {
             userId: userId
           }

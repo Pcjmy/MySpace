@@ -22,6 +22,9 @@ import UserProfileInfo from '../components/UserProfileInfo';
 import UserProfilePosts from '../components/UserProfilePosts';
 import UserProfileWrite from '../components/UserProfileWrite';
 import { reactive } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import $ from 'jquery';
 
 export default {
   name: "UserList",
@@ -32,50 +35,45 @@ export default {
       UserProfileWrite
   },
   setup() {
-    const user = reactive({
-      id: 1,
-      username: "Pcjmy",
-      lastName: "ZZU",
-      firstName: "Pcjmy",
-      followerCount: 0,
-      is_followed: false,
-    });
+    const user = reactive({});
+    const store = useStore();
+    const route = useRoute();
+    const userId = parseInt(route.params.userId);
 
-    const posts = reactive({
-      count: 3,
-      posts: [
-        {
-          id: 1,
-          userId: 1,
-          content: "Vue是一套用于构建用户界面的渐进式框架",
-        },
-        {
-          id: 2,
-          userId: 1,
-          content: "Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统",
-        },
-        {
-          id: 3,
-          userId: 1,
-          content: "组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、独立和通常可复用的组件构建大型应用,几乎任意类型的应用界面都可以抽象为一个组件树",
-        },
-      ]
-    });
+    $.ajax({
+      url: "https://app165.acapp.acwing.com.cn/myspace/getinfo/",
+      type: "GET",
+      data: {
+        user_id: userId
+      },
+      headers: {
+        "Authorization": "Bearer " + store.state.user.access
+      },
+      success: (res) => {
+        user.id = res.id;
+        user.username = res.username;
+        user.photo = res.photo;
+        user.followerCount = res.followerCount;
+        user.is_followed = res.is_followed;
+      }
+    })
+
+    const posts = reactive({});
 
     const follow = () => {
-      if (user.is_followed) return;
+      if (user.is_followed) return ;
       user.is_followed = true;
       user.followerCount ++ ;
     };
 
     const unfollow = () => {
-      if (!user.is_followed) return;
+      if (!user.is_followed) return ;
       user.is_followed = false;
       user.followerCount -- ;
     };
 
     const post_a_post = (content) => {
-      if(content.length==0) return ;
+      if (content.length==0) return ;
       posts.count ++ ;
       posts.posts.unshift({
         id: posts.count,

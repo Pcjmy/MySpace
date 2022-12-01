@@ -22,7 +22,7 @@ export default {
             required: true,
         },
     },
-    setup(props,context) {
+    setup(props, context) {
         const delete_a_post = post_id => {
             context.emit('delete_a_post',post_id)
         }
