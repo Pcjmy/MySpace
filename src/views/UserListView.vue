@@ -31,9 +31,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    // let users = [{id: 18, username: 'yxc8', photo: 'https://cdn.acwing.com/media/user/profile/photo/1_lg_844c66b332.jpg', followerCount: 202}]
-
-    let users = reactive([])
+    const users = reactive([])
 
     $.ajax({
       url: "https://app165.acapp.acwing.com.cn/myspace/userlist/",
@@ -42,17 +40,6 @@ export default {
         for(let item of res) {
           users.push(item);
         }
-        // console.log(reactive(res));
-        // console.log(typeof reactive(res));
-        // let obj = reactive(res);
-        // for(let item of obj) {
-        //   console.log(item,item.id);
-        // }
-        // users = reactive(res);
-        // console.log(users);
-        // users.info = res;
-        // console.log(users.info);
-        // console.log(reactive(res));
       }
     })
 

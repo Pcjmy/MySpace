@@ -58,7 +58,23 @@ export default {
       }
     })
 
-    const posts = reactive({});
+    const posts = reactive({
+      posts: []
+    });
+
+    $.ajax({
+      url: "https://app165.acapp.acwing.com.cn/myspace/post/",
+      type: "GET",
+      data: {
+        user_id: userId
+      },
+      headers: {
+        "Authorization": "Bearer " + store.state.user.access
+      },
+      success: (res) => {
+        posts.posts = res;
+      }
+    })
 
     const follow = () => {
       if (user.is_followed) return ;
