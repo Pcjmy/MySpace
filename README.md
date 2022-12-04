@@ -59,3 +59,11 @@ npm i jwt-decode
 + 登录
 + 注册
 + 404
+
+### 遇到的问题
+
+```shell
+1.切换用户个人信息没有更新
+解决办法：<router-view :key="$route.fullPath"/>
+```
+
