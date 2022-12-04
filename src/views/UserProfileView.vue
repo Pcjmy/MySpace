@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-3">
                     <UserProfileInfo @follow="follow" @unfollow="unfollow" :user="user" />
-                    <UserProfileWrite @post_a_post="post_a_post" />
+                    <UserProfileWrite @post_a_post="post_a_post" v-if="flag" />
                 </div>
                 <div class="col-9">
                     <UserProfilePosts :posts="posts" @delete_a_post="delete_a_post" />
@@ -24,6 +24,7 @@ import UserProfileWrite from '../components/UserProfileWrite';
 import { reactive } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { computed } from 'vue'
 import $ from 'jquery';
 
 export default {
@@ -103,8 +104,13 @@ export default {
       posts.count = posts.posts.length;
     }
 
+    const flag = computed(() => {
+      return userId === store.state.user.id;
+    })
+
     return {
       user,
+      flag,
       follow,
       unfollow,
       posts,
