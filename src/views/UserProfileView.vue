@@ -25,6 +25,7 @@ import { reactive } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue'
+import { inject } from 'vue'
 import $ from 'jquery';
 
 export default {
@@ -40,6 +41,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const userId = parseInt(route.params.userId);
+    const fn = inject('reload', () => {}, true)
 
     $.ajax({
       url: "https://app165.acapp.acwing.com.cn/myspace/getinfo/",
@@ -74,6 +76,7 @@ export default {
       },
       success: (res) => {
         posts.posts = res;
+        posts.count = posts.posts.length;
       }
     })
 
@@ -90,14 +93,34 @@ export default {
     };
 
     const post_a_post = (content) => {
-      if (content.length==0) return ;
+      if (content.length === 0) return ;
       posts.count ++ ;
-      posts.posts.unshift({
-        id: posts.count,
-        userId: 1,
-        content: content,
+      // posts.posts.unshift({
+      //   id: posts.count,
+      //   userId: userId,
+      //   content: content,
+      // })
+
+      $.ajax({
+        type: "POST",
+        data: {
+          content: content
+        },
+        url: "https://app165.acapp.acwing.com.cn/myspace/post/",
+        headers: {
+          "Authorization": "Bearer " + store.state.user.access
+        },
+        success: (res) => {
+          if (res.result === "success") {
+            // console.log(res);
+            // console.log(fn);
+            fn();
+          }
+        }
       })
-    };
+      // this.reload();
+      // console.log(this);
+    }
 
     const delete_a_post = post_id => {
       posts.posts = posts.posts.filter(post=>post.id!==post_id);
