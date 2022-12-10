@@ -113,23 +113,8 @@ export default {
       })
     }
 
-    const delete_a_post = post_id => {
-      $.ajax({
-        url: 'https://app165.acapp.acwing.com.cn/myspace/post/',
-        type: 'DELETE',
-        headers: {
-          'Authorization': 'Bearer ' + store.state.user.access
-        },
-        data: {
-          post_id: post_id
-        },
-        success: (res) => {
-          if (res.result === 'success') {
-            posts.posts = posts.posts.filter(post=>post.id!==post_id)
-            posts.count = posts.posts.length
-          }
-        }
-      })
+    const delete_a_post = () => {
+      fn()
     }
 
     const flag = computed(() => {

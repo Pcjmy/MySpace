@@ -19,7 +19,7 @@ vue ui
 
 **插件**
 
-![插件](assets/插件.png)
+![插件](assets/插件.PNG)
 
 ### 命令行
 
