@@ -8,7 +8,7 @@
                     <UserProfileWrite @post_a_post="post_a_post" v-if="flag" />
                 </div>
                 <div class="col-9">
-                    <UserProfilePosts :posts="posts" @delete_a_post="delete_a_post" />
+                    <UserProfilePosts :posts="posts" :user="user" @delete_a_post="delete_a_post" />
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ export default {
 
     const posts = reactive({
       posts: []
-    });
+    })
 
     $.ajax({
       url: "https://app165.acapp.acwing.com.cn/myspace/post/",
@@ -84,22 +84,17 @@ export default {
       if (user.is_followed) return ;
       user.is_followed = true;
       user.followerCount ++ ;
-    };
+    }
 
     const unfollow = () => {
       if (!user.is_followed) return ;
       user.is_followed = false;
       user.followerCount -- ;
-    };
+    }
 
     const post_a_post = (content) => {
       if (content.length === 0) return ;
       posts.count ++ ;
-      // posts.posts.unshift({
-      //   id: posts.count,
-      //   userId: userId,
-      //   content: content,
-      // })
 
       $.ajax({
         type: "POST",
@@ -112,23 +107,33 @@ export default {
         },
         success: (res) => {
           if (res.result === "success") {
-            // console.log(res);
-            // console.log(fn);
-            fn();
+            fn()
           }
         }
       })
-      // this.reload();
-      // console.log(this);
     }
 
     const delete_a_post = post_id => {
-      posts.posts = posts.posts.filter(post=>post.id!==post_id);
-      posts.count = posts.posts.length;
+      $.ajax({
+        url: 'https://app165.acapp.acwing.com.cn/myspace/post/',
+        type: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + store.state.user.access
+        },
+        data: {
+          post_id: post_id
+        },
+        success: (res) => {
+          if (res.result === 'success') {
+            posts.posts = posts.posts.filter(post=>post.id!==post_id)
+            posts.count = posts.posts.length
+          }
+        }
+      })
     }
 
     const flag = computed(() => {
-      return userId === store.state.user.id;
+      return userId === store.state.user.id
     })
 
     return {

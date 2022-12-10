@@ -5,7 +5,7 @@
                 <div class="card single-post">
                     <div class="card-body">
                         {{ post.content }}
-                        <button @click="delete_a_post(post.id)" class="btn btn-danger btn-sm">删除</button>
+                        <button @click="delete_a_post(post.id)" class="btn btn-danger btn-sm" v-if="flag">删除</button>
                     </div>
                 </div>
             </div>
@@ -14,20 +14,32 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 export default {
-    name: "UserProfilePosts",
+    name: 'UserProfilePosts',
     props: {
         posts: {
             type: Object,
-            required: true,
+            required: true
         },
+        user: {
+            type: Object,
+            required: true
+        }
     },
     setup(props, context) {
+        const store = useStore()
+        const flag = computed(()=>{
+            return store.state.user.id === props.user.id;
+        })
         const delete_a_post = post_id => {
-            context.emit('delete_a_post',post_id)
+            context.emit('delete_a_post', post_id)
         }
         return {
-            delete_a_post
+            delete_a_post,
+            flag
         }
     }
 }
