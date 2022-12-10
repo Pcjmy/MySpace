@@ -27,6 +27,8 @@
 import ContentBase from '../components/ContentBase'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
+import router from '@/router/index'
+import $ from 'jquery'
 
 export default {
   name: 'RegisterView',
@@ -41,16 +43,30 @@ export default {
     let error_message = ref();
 
     const register = () => {
-      error_message.value = "";
-      store.dispatch("register", {
-        username: username.value,
-        password: password.value,
-        password_confirm: password_confirm.value,
-        success() {
-          console.log('注册成功');
+      error_message.value = '';
+      $.ajax({
+        url: 'https://app165.acapp.acwing.com.cn/myspace/user/',
+        type: 'POST',
+        data: {
+          username: username.value,
+          password: password.value,
+          password_confirm: password_confirm.value
         },
-        error() {
-          error_message.value = '注册失败';
+        success: (res) => {
+          if (res.result === 'success') {
+            store.dispatch('login', {
+              username: username.value,
+              password: password.value,
+              success() {
+                router.push({name: 'userlist'})
+              },
+              error() {
+                error_message.value = '系统异常，请稍后重试'
+              }
+            })
+          } else {
+            error_message.value = res.result
+          }
         }
       })
     }

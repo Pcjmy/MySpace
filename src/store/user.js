@@ -86,25 +86,6 @@ const ModuleUser = {
                 data.error();
             }
         });
-    },
-    register(context, data) {
-      $.ajax({
-        url: 'https://app165.acapp.acwing.com.cn/myspace/user/',
-        type: 'POST',
-        data: {
-          username: data.username,
-          password: data.password,
-          password_confirm: data.password_confirm
-        },
-        success: (res) => {
-          console.log(res.result);
-          if (res.result === 'success') {
-            data.success();
-          } else {
-            data.error();
-          }
-        }
-      })
     }
   },
   modules: {
