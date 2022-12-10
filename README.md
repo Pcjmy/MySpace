@@ -51,6 +51,8 @@ npm i jwt-decode
 
 登录用户名：123，密码：123
 
+已注册用户名：Pcjmy，密码：12345678
+
 ### 实现页面
 
 + 首页
@@ -65,5 +67,8 @@ npm i jwt-decode
 ```shell
 1.切换用户个人信息没有更新
 解决办法：<router-view :key="$route.fullPath"/>
+
+2.[vuex] unknown action type
+解决办法：函数写在actions和modules之间，没有写在actions里面
 ```
 
