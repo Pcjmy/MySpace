@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import $ from 'jquery'
 
 export default {
     name: "UserProfileInfo",
@@ -24,15 +26,45 @@ export default {
         user: {
             type: Object,
             required: true,
-        },
+        }
     },
     setup(props, context) {
+        const store = useStore()
+
         const follow = () => {
-            context.emit('follow');
+            $.ajax({
+                url: 'https://app165.acapp.acwing.com.cn/myspace/follow/',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + store.state.user.access,
+                },
+                data: {
+                    target_id: props.user.id
+                },
+                success: (res) => {
+                    if (res.result === 'success') {
+                        context.emit('follow')
+                    }
+                }
+            })
         }
 
         const unfollow = () => {
-            context.emit('unfollow');
+            $.ajax({
+                url: 'https://app165.acapp.acwing.com.cn/myspace/follow/',
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + store.state.user.access,
+                },
+                data: {
+                    target_id: props.user.id
+                },
+                success: (res) => {
+                    if (res.result === 'success') {
+                        context.emit('unfollow')
+                    }
+                }
+            })
         }
 
         return {
