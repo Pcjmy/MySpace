@@ -70,5 +70,8 @@ npm i jwt-decode
 
 2.[vuex] unknown action type
 解决办法：函数写在actions和modules之间，没有写在actions里面
+
+3.Invalid route component at extractComponentsGuards
+解决办法：vue-router中component后的组件名不加引号
 ```
 

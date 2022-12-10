@@ -1,18 +1,13 @@
 <template>
-  <NavBar />
   <router-view :key="$route.fullPath" v-if="isRouterAlive"/>
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
-import NavBar from './components/NavBar'
 
 export default {
-  name: "App",
-  components: {
-    NavBar,
-  },
+  name: 'App',
   provide () {
     return {
       reload: this.reload
